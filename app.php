@@ -66,17 +66,21 @@
     // ================================================
     function init_mysql_conn() {
 
-        // Create connection
-        require_once('include/credentials.inc');  // this file defines the variables used below
-        $conn = new mysqli($servername, $username, $password, $database);
-        $conn->set_charset("utf8");
+        // this file defines the variables used below
+        require_once('include/credentials.inc');
 
-        // Check connection
-        if ($conn->connect_error) {
-            return_error(500, "MySQL connection failed: " . $conn->connect_error);
+        // throw errors rather than just warnings
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+        // create the connection and return it
+        try {
+            $conn = new mysqli($servername, $username, $password, $database);
+            $conn->set_charset("utf8");
+            return $conn;
         }
-
-        return $conn;
+        catch (mysqli_sql_exception $e) {
+            return_error(500, "Database connection failed");
+        }
     }
 
 

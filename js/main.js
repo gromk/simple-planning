@@ -39,16 +39,17 @@ $(document).ready(function() {
         var new_code = (old_code + 1) % 4 ;
         var cell_id = cell.attr('id').substr(5);
         var cell_xy = cell.attr('id').match(/cell_([0-9]+-[0-9]+-[0-9]+)_([0-9]+)/);
-        $.post('app.php', {'code': new_code, 'date':cell_xy[1], 'user':cell_xy[2]}, function(res) {
-            if (res.status == 200) {
-                updateCellDisplay(cell_id, new_code);    // updates the cell display (color, icon...)
-                updateTotalsForThisDay(cell_xy[1], 1);   // updates the totals in header and footer rows
-            }
-            else {
-                flash_ajax_error(res);
-            }
-            cell.removeClass('pending');
-        });
+        $.post('app.php', {'code': new_code, 'date':cell_xy[1], 'user':cell_xy[2]})
+             .done(function(res) {
+                      updateCellDisplay(cell_id, new_code);    // updates the cell display (color, icon...)
+                      updateTotalsForThisDay(cell_xy[1], 1);   // updates the totals in header and footer rows
+                  })
+             .fail(function(jqXHR) {
+                      flash_ajax_error(jqXHR.responseJSON);
+                  })
+             .always(function() {
+                      cell.removeClass('pending');
+                    });
     }
 
     // [Click event handler]
@@ -142,8 +143,8 @@ $(document).ready(function() {
     // ===================
 
     // POPULATES THE LIST OF GROUPS (IN THE COLLAPSED MENU)
-    $.get("app.php?type=groups", function(res) {
-        if (res.status == 200) {
+    $.get("app.php?type=groups")
+        .done(function(res) {
             $.each(res.data, function(group_name, user_ids) {
                 var li = $('<li class="text-white">'+group_name+'</li>');
                 li.click({'user_ids': user_ids}, selectRows);
@@ -153,11 +154,10 @@ $(document).ready(function() {
             // Add a button to show ALL the users
             // (implementation choice => user_ids is an empty array)
             $('#groups li:first-child').click({'user_ids': []}, selectRows);
-        }
-        else {
-            flash_ajax_error(res);
-        }
-    });
+        })
+        .fail(function(jqXHR) {
+            flash_ajax_error(jqXHR.responseJSON);
+        });
 
 
     // CREATE ONE SCHEDULE TABLE FOR EACH MONTH
@@ -167,9 +167,8 @@ $(document).ready(function() {
 
     $('.schedule').hide();
 
-    $.get("app.php?type=users", function(res) {
-        if (res.status == 200) {
-
+    $.get("app.php?type=users")
+        .done(function(res) {
             var users = res.data;
             var day_names = ['D', 'L', 'Ma', 'Me', 'J', 'V', 'S'];
             var month_names = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
@@ -275,8 +274,8 @@ $(document).ready(function() {
             var date1 = formatDateForSQL(new Date(today.getFullYear(), today.getMonth(), 1));
             var date2 = formatDateForSQL(new Date(today.getFullYear(), today.getMonth() + nb_displayed_months, 0));
 
-            $.get("app.php?type=planning&from="+date1+"&to="+date2, function(res) {
-                if (res.status == 200) {
+            $.get("app.php?type=planning&from="+date1+"&to="+date2)
+                .done(function(res) {
                     $.each(res.data, function(index, planning) {
                         var cell_id = planning['date']+'_'+planning['user_id'];
                         var code = planning['code'];
@@ -290,17 +289,14 @@ $(document).ready(function() {
                     // FINALLY, NOW THAT EVERYTHING IS LOADED, SHOW THE SCHEDULES
                     $('.schedule').slideDown();
                     // ==========================================================
-                }
-                else {
-                    flash_ajax_error(res);
-                }
-            });
+                })
+                .fail(function(jqXHR) {
+                    flash_ajax_error(jqXHR.responseJSON);
+                });
 
-        }
-        else {
-            flash_ajax_error(res);
-        }
-
-    });
+        })
+        .fail(function(jqXHR) {
+            flash_ajax_error(jqXHR.responseJSON);
+        });
 
 });
