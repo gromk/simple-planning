@@ -43,6 +43,7 @@
 
         $arr['status'] = $httpcode;
 
+        http_response_code($httpcode);
         header("Content-type: application/json; charset=utf-8");
 //         die(json_encode($arr, JSON_THROW_ON_ERROR));
         die(json_encode($arr));
