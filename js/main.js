@@ -5,11 +5,26 @@ $(document).ready(function() {
     var code_icons   = ['question', 'building', 'home', 'umbrella-beach'];
     var closing_days = ['2020-11-11', '2020-12-24', '2020-12-25', '2020-12-28',
                         '2020-12-29', '2020-12-30', '2020-12-31']
+    var max_count = 12;
+    var code_to_count = 1;
 
 
     // ============================
     // DEFINTION OF NAMED FUNCTIONS
     // ============================
+
+    // CACHES JQUERY HEAVY SELECTIONS (FOR PERFORMANCE PURPOSE)
+    window.$cache = {};
+    $$ = function(s) {
+        if (window.$cache.hasOwnProperty(s)) {
+            return $(window.$cache[s]);
+        }
+        var e = $(s);
+        if(e.length > 0) {
+            window.$cache[s] = e;
+        }
+        return e;
+    }
 
     // [Click event handler]
     // UPDATES THE VALUE (=INCREMENTS) OF A GIVEN CELL AND SAVES IT INTO THE DATABASE
@@ -26,7 +41,8 @@ $(document).ready(function() {
         var cell_xy = cell.attr('id').match(/cell_([0-9]+-[0-9]+-[0-9]+)_([0-9]+)/);
         $.post('app.php', {'code': new_code, 'date':cell_xy[1], 'user':cell_xy[2]}, function(res) {
             if (res.status == 200) {
-                updateCellDisplay(cell_id, new_code);
+                updateCellDisplay(cell_id, new_code);    // updates the cell display (color, icon...)
+                updateTotalsForThisDay(cell_xy[1], 1);   // updates the totals in header and footer rows
             }
             else {
                 flash_ajax_error(res);
@@ -39,20 +55,26 @@ $(document).ready(function() {
     // SHOWS ONLY A SUBSET OF ROWS IN THE SCHEDULES
     selectRows = function(event) {
         var user_ids = event.data.user_ids;
-        if (user_ids.length == 0) {
-            $('tr').show();
+        if (user_ids.length == 0) {  // show all users
+            $('tr.row_user').show();
+            $(".user-hidden").removeClass("user-hidden");
         }
         else {
-            $('tr').map(function(index, elt) {
+            $('tr.row_user').map(function(index, elt) {
                 var user_id = elt.id.match('_([0-9]+)$')[1];
                 if (user_ids.includes(user_id)) {
-                    $(elt).show();
+                    $(elt).removeClass("user-hidden");
+                    $(elt).find("td").removeClass("user-hidden");
                 }
                 else {
-                    $(elt).hide();
+                    $(elt).addClass("user-hidden");
+                    $(elt).find("td").addClass("user-hidden");
                 }
             });
         };
+
+        // updates the totals
+        updateTotalsForAllDates(code_to_count);
     }
 
     // UPDATES THE DISPLAY OF A GIVEN CELL TO MATCH A GIVEN CODE
@@ -66,6 +88,28 @@ $(document).ready(function() {
         $("#icon_"+cell_id).attr('class', function(i, c) {
                 return c.replace(/fa-[-a-z]+/, 'fa-'+code_icons[code]);
             });
+    }
+
+    // UPDATES THE TOTAL NUMBER OF PEOPLE WITH code[int]
+    updateTotalsForAllDates = function(code) {
+        $$("td[id^=header_]").map(function(index, elt) {
+            var date = elt.id.substr(7);
+            updateTotalsForThisDay(date, code_to_count);
+        });
+    }
+    updateTotalsForThisDay = function(date, code) {
+        var day_cells = $$("td[id^=cell_"+date+"_]");
+        var count = day_cells.not(".user-hidden").filter(".code-"+code_classes[code]).length;
+        var result_cells = $(".cell_total_"+date);
+        result_cells.html(count);
+        if (count > max_count) {
+            result_cells.prepend($('<i class="fa fa-exclamation-triangle">'));
+            result_cells.addClass("warning");
+        }
+        else {
+            result_cells.find('i').remove();
+            result_cells.removeClass("warning");
+        }
     }
 
     // CONVERTS A Date OBJECT INTO A STRING WITH "yyyy-m-d" FORMAT
@@ -146,16 +190,22 @@ $(document).ready(function() {
                 div.append(table);
 
                 // iterating through rows of the k-th schedule...
-                for (var i=0 ; i<=users.length ; i++) {
+                var nb_rows = users.length+3;
+                for (var i=1 ; i<=nb_rows ; i++) {
 
-                    // DOM object for the table row (first row is the header)
-                    if (i == 0) {
+                    // DOM object for the table row (first row is the header, second and last rows contain totals)
+                    // + DOM object for the first column
+                    if (i == 1) {
                         var trow = $('<th>');
                         trow.append($('<td class="column_users">&nbsp;</td>'));
                     }
+                    else if (i == 2 || i == nb_rows) {
+                        var trow = $('<tr class="row_total">');
+                        trow.append($('<td class="column_users">Sur site&nbsp;&nbsp;<i class="fa fa-long-arrow-alt-right"></i></td>'));
+                    }
                     else {
-                        var user = users[i-1];
-                        var trow = $('<tr id="row_'+year+'-'+month+'_'+user['id']+'">');
+                        var user = users[i-3];
+                        var trow = $('<tr id="row_'+year+'-'+month+'_'+user['id']+'" class="row_user">');
                         trow.append($('<td class="column_users">'+user['name']+'</td>'));
                     }
 
@@ -174,9 +224,12 @@ $(document).ready(function() {
                             var td = $('<td class="column"></td>');
 
                             // setting cell ID attribute and contents
-                            if (i == 0) {
+                            if (i == 1) {
                                 td.attr('id', 'header_'+date_str);
                                 td.html(day_names[dow2]+'</br>'+j);
+                            }
+                            else if (i == 2 || i == nb_rows) {
+                                td.attr('class', 'cell_total_'+date_str);
                             }
                             else {
                                 var cell_id = date_str+'_'+user['id'];
@@ -229,6 +282,9 @@ $(document).ready(function() {
                         var code = planning['code'];
                         updateCellDisplay(cell_id, code);
                     });
+
+                    // Computes and displays the number of people on the working place
+                    updateTotalsForAllDates(code_to_count);
 
                     // ==========================================================
                     // FINALLY, NOW THAT EVERYTHING IS LOADED, SHOW THE SCHEDULES

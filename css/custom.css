@@ -9,6 +9,22 @@ td.column {
     width: 40px;
     text-align: center;
 }
+tr.row_total td {
+    height: 15px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #555;
+    text-align: center;
+}
+tr.row_total td.column_users {
+    text-align: right;
+}
+tr.row_total .warning {
+    font-size: 0.9em;
+    color: red;
+}
 tr td.column {
     cursor: pointer;
 }
@@ -54,6 +70,9 @@ td.code-office {
 }
 td.code-unknown {
     color: #888;
+}
+tr.user-hidden {
+    display: none;
 }
 div.schedule_container {
     overflow-x: auto;
