@@ -1,14 +1,74 @@
-th {
-    display: table-header-group;
+/* List of user groups */
+/* =================== */
+#groups li {
+  margin: 8px;
+  display: inline-block;
+  cursor: pointer;
+  float: left;
 }
+#groups li:hover {
+  text-decoration: underline;
+}
+
+/* Title above each monthly schedule */
+/* ================================= */
+h1 {
+    margin-bottom: 60px;
+}
+div.jumbotron h1 {
+  font-size: 3.0rem;
+}
+
+/* DOM containers for the schedules */
+/* ================================ */
+.container {
+    max-width: 1200px !important;
+}
+
+div.schedule_container {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Alert messages */
+/* ============== */
+.alert {
+    border: 0;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    margin: 0;
+    display: none;
+}
+.alert p {
+    margin: 4px;
+}
+
+/* Schedule styling (table, rows, columns, cells...) */
+/* ================================================= */
+table {
+    margin-left: 28px;
+    margin-right: 28px;
+    width: calc(100% - 60px) !important;
+    font-size:1em;
+}
+
 td {
-/*     border: solid 1px black; */
     height: 20px;
 }
+
 td.column {
     width: 40px;
     text-align: center;
 }
+
+th {
+    display: table-header-group;
+}
+
+tr.user-hidden {
+    display: none;
+}
+
 tr.row_total td {
     height: 15px;
     padding-top: 2px;
@@ -25,6 +85,7 @@ tr.row_total .warning {
     font-size: 0.9em;
     color: red;
 }
+
 tr td.column {
     cursor: pointer;
 }
@@ -32,30 +93,27 @@ tr td.column:hover {
     color: black;
     transition: 0.2s ease-out;
 }
+
 td.column_users {
     width: 80px;
 }
+
 td.column_fdow {
     border-left: solid 1px black;
 }
 td.column_ldow {
     border-right: solid 1px black;
 }
+
 th td.column_today {
     background-color: #555;
     color: #eee;
     border-top-left-radius:3px;
     border-top-right-radius:3px;
 }
-table {
-    margin-left: 28px;
-    margin-right: 28px;
-    width: calc(100% - 60px) !important;
-    font-size:1em;
-}
-h1 {
-    margin-bottom: 60px;
-}
+
+/* Cell styling for each possible code */
+/* =================================== */
 td.code-home {
     background-color: #b2deec;
     color: #5d94a6;
@@ -70,38 +128,5 @@ td.code-office {
 }
 td.code-unknown {
     color: #888;
-}
-tr.user-hidden {
-    display: none;
-}
-div.schedule_container {
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-div.jumbotron h1 {
-  font-size: 3.0rem;
-}
-#groups li {
-  margin: 8px;
-  display: inline-block;
-  cursor: pointer;
-  float: left;
-}
-#groups li:hover {
-  text-decoration: underline;
-}
-
-.alert {
-    border: 0;
-    border-radius: 0;
-    -moz-border-radius: 0;
-    margin: 0;
-    display: none;
-}
-.alert p {
-    margin: 4px;
-}
-.container {
-    max-width: 1200px !important;
 }
 
