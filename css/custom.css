@@ -1,13 +1,43 @@
+/* Buttons for navigating though history */
+/* ===================================== */
+.navbar-history {
+    border-radius: .25rem;
+    border: solid 1px white;
+    background-color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+.navbar-history:hover {
+    border-color: #ddd;
+    background-color: #ddd;
+}
+.navbar-history.disabled {
+    color: #aaa;
+    border-color: #aaa;
+    background-color: #343a40;
+}
+
 /* List of user groups */
 /* =================== */
 #groups li {
-  margin: 8px;
-  display: inline-block;
-  cursor: pointer;
-  float: left;
+    margin: 8px;
+    display: inline-block;
+    cursor: pointer;
+    float: left;
+    color: white;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 #groups li:hover {
-  text-decoration: underline;
+    text-decoration: underline;
+}
+#groups li.selected {
+    color: #343a40;
+    background-color: white;
+    font-weight: 1000;
+}
+#groups a {
+    color: inherit !important;  /* CSS reset */
 }
 
 /* Title above each monthly schedule */
@@ -16,7 +46,7 @@ h1 {
     margin-bottom: 60px;
 }
 div.jumbotron h1 {
-  font-size: 3.0rem;
+    font-size: 3.0rem;
 }
 
 /* DOM containers for the schedules */

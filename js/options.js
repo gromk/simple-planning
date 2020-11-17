@@ -21,9 +21,9 @@ var OPTIONS = {
     code_icons: ["question", "building", "home", "umbrella-beach"],
 
     // Code number which will be counted and displayed in header/footer rows
-    code_to_count: 1
+    code_to_count: 1,
 
     // Maximum count allowed before a warning is displayed
-    max_count: 12,
+    max_count: 12
 
 };

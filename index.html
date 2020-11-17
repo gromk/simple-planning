@@ -35,12 +35,17 @@
             <ul class="text-muted">
               <li>Cliquer sur une case du planning pour en modifier le statut : présentiel, télétravail, congés.</li>
               <li>Pour limiter le nombre de lignes, il est possible de choisir d'afficher seulement un groupe de personne, en cliquant ci-contre.</li>
+              <li>Pour corriger une fausse manip', cliquer sur&nbsp;
+                <button id="undo" class="navbar-history"><i class="fas fa-undo-alt"></i>&nbsp;Annuler</button>
+                ou&nbsp;
+                <button id="redo" class="navbar-history"><i class="fas fa-redo-alt"></i>&nbsp;Refaire</button></li>
+                (sinon taper Ctrl+Z ou Ctrl+Y)
             </ul>
           </div>
           <div class="col-sm-4 offset-md-1 py-4">
             <h4 class="text-white">Groupes</h4>
             <ul id="groups" class="list-unstyled">
-              <li class="text-white">Tous</li>
+              <li class="selected"><a href="#Tous">Tous</a></li>
             </ul>
           </div>
         </div>
