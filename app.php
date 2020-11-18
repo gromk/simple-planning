@@ -1,4 +1,6 @@
 <?php
+    http_response_code(500); // in case anything goes wrong... it will be overwritten is JSON is output properly
+
     $method = $_SERVER['REQUEST_METHOD'];
 
     switch ($method) {
@@ -196,9 +198,10 @@ EOT;
         $date = get_request_param($_POST, "date");
         $user = get_request_param($_POST, "user");
         $code = get_request_param($_POST, "code");
+        $ip = $_SERVER['REMOTE_ADDR'];
 
         $conn = init_mysql_conn();
-        $sql = "INSERT INTO planning (date, user, code) VALUES ('$date', $user, $code) ON DUPLICATE KEY UPDATE code=$code";
+        $sql = "INSERT INTO planning (date, user, code, lastmodified_timestamp, lastmodified_ip) VALUES ('$date', $user, $code, SYSDATE(), '$ip') ON DUPLICATE KEY UPDATE code=$code, lastmodified_timestamp=SYSDATE(), lastmodified_ip='$ip'";
         $result = $conn->query($sql);
 
         if ($result) {

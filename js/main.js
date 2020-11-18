@@ -262,7 +262,10 @@ $(document).ready(function() {
 
         var alert = $(alert_html);
         alert.insertBefore($('.jumbotron'));
-        $('.error_msg', alert).html(res.error + ' (code ' + res.status + ')');
+        if (res)
+            $('.error_msg', alert).html(res.error + ' (code ' + res.status + ')');
+        else
+            $('.error_msg', alert).html("Erreur lors de l'exécution de la requête");
         alert.slideDown();
         alert.alert();
     }
