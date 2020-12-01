@@ -232,7 +232,7 @@ EOT;
             $from_date = new DateTime($from);
             $to_date = new DateTime($to);
             $interval = $to_date->diff($from_date);
-            if ($interval->days > 60) {
+            if ($interval->days > 70) {
                 return_error(413, "Interval between 'from' and 'to' is too large");
             }
 
