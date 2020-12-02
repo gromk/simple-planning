@@ -1,11 +1,15 @@
 var OPTIONS = {
 
-    // List of closing days (in YYYY-MM-DD format)
+    // List of closing days (in YYYY-M-D format)
     closing_days: ["2020-11-11",
                    "2020-12-24", "2020-12-25", "2020-12-28", "2020-12-29", "2020-12-30", "2020-12-31",
-                   "2020-01-01",
-                   "2020-04-05",
-                   "2020-05-13", "2020-05-24"],
+                   "2021-1-1",
+                   "2021-4-5",
+                   "2021-5-13", "2021-5-14", "2021-5-24",
+                   "2021-8-9", "2021-8-10", "2021-8-11", "2021-8-12", "2021-8-13",
+                   "2021-11-12",
+                   "2021-12-27", "2021-12-28", "2021-12-29", "2021-12-30"
+                  ],
 
     // number of monthly schedules to be displayed (starting from the current month)
     nb_displayed_months: 2,
