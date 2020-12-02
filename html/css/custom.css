@@ -178,6 +178,22 @@ td.split i.first-icon {
 td.split i.second-icon {
     margin-left: 0.5rem;
 }
+@media all and (max-width: 1200px) {
+    td.split {
+        font-size: 0.7rem;
+    }
+    td.split i.first-icon {
+        margin-right: 0;
+        margin-right: -0.1rem;
+    }
+    td.split i.second-icon {
+        margin-left: 0;
+        margin-left: -0.1rem;
+    }
+    td.split i {
+        margin-top: 0.4rem;
+    }
+}
 
 td.split.code-unknown-morning.code-unknown-afternoon  { background: linear-gradient(to right,  transparent 0%,transparent 50%,transparent 50%,transparent 100%); }
 td.split.code-unknown-morning.code-office-afternoon   { background: linear-gradient(to right,  transparent 0%,transparent 50%,#e5edb7 50%,#e5edb7 100%); }
