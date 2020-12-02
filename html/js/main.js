@@ -180,7 +180,7 @@ $(document).ready(function() {
             var other_code_int = parseCellCode(cell, other_half);
 
             // the cell won't appear to be split in the database if both codes are the same
-            if (new_code_int_db != other_code_int) {
+            if (new_code_int != other_code_int) {
                 if (half_is_morning)
                     var new_code_int_db = (10*(new_code_int+1)) + (other_code_int+1);
                 else
