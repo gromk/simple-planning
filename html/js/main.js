@@ -173,7 +173,7 @@ $(document).ready(function() {
 
         // retrieve the code number of the other half (if there is one)
         // and compute the compound code number to save into the database
-        var new_code_int_db = new_code_int
+        var new_code_int_db = new_code_int+1
         if (cell.hasClass('split')) {
             var half_is_morning = (half == "-morning");
             var other_half = half_is_morning ? "-afternoon" : "-morning";
@@ -182,9 +182,9 @@ $(document).ready(function() {
             // the cell won't appear to be split in the database if both codes are the same
             if (new_code_int_db != other_code_int) {
                 if (half_is_morning)
-                    var new_code_int_db = (10*new_code_int) + other_code_int;
+                    var new_code_int_db = (10*(new_code_int+1)) + (other_code_int+1);
                 else
-                    var new_code_int_db = (10*other_code_int) + new_code_int;
+                    var new_code_int_db = (10*(other_code_int+1)) + (new_code_int+1);
             }
         }
 
@@ -290,6 +290,7 @@ $(document).ready(function() {
             else {
                 // ambiguous old state is forced to "unknown"
                 var new_code_int = 0;
+                var new_code_int_db = new_code_int+1;
 
                 // retrieve the date and user from the ID attribute
                 var cell_id_arr = parseCellId(cell);
@@ -299,7 +300,7 @@ $(document).ready(function() {
 
                 // the backend API needs to be called or this change will be lost
                 cell.addClass('pending');
-                var deferred = $.post('app.php', {'code': new_code_int, 'date':date_str, 'user':user_id})
+                var deferred = $.post('app.php', {'code': new_code_int_db, 'date':date_str, 'user':user_id})
                     .fail(function(jqXHR) {
                               flash_ajax_error(jqXHR.responseJSON);
                           })
@@ -643,11 +644,11 @@ $(document).ready(function() {
                         var cell_id = planning['date']+'_'+planning['user_id'];
                         var code_int = planning['code'];
                         if (code_int < 10) {
-                            updateCellStyle(cell_id, code_int, "");
+                            updateCellStyle(cell_id, (code_int - 1), "");
                         }
                         else {
-                            var code_morning = Math.floor(code_int/10);
-                            var code_afternoon = code_int % 10
+                            var code_morning = Math.floor(code_int/10) - 1;
+                            var code_afternoon = (code_int - 1) % 10;
                             changeCellSplitting($("#cell_"+cell_id), false);
                             updateCellStyle(cell_id, code_morning, "-morning");
                             updateCellStyle(cell_id, code_afternoon, "-afternoon");
