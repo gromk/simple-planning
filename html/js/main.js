@@ -428,9 +428,20 @@ $(document).ready(function() {
         // jQuery selectors are used to count the cells
         var code_str = OPTIONS.code_classes[code_int];
         var day_cells = $$("td[id^=cell_"+date+"_]");
-        var count_both = day_cells.not(".user-hidden").filter(".code-"+code_str).length;
-        var count_morning = day_cells.not(".user-hidden").filter(".code-"+code_str+"-morning").length;
-        var count_afternoon = day_cells.not(".user-hidden").filter(".code-"+code_str+"-afternoon").length;
+        var cells_both = day_cells.not(".user-hidden").filter(".code-"+code_str);
+        var cells_morning = day_cells.not(".user-hidden").filter(".code-"+code_str+"-morning");
+        var cells_afternoon = day_cells.not(".user-hidden").filter(".code-"+code_str+"-afternoon");
+        if (OPTIONS.uncounted_users.length > 0) {
+            let filter_out_users = function(index) {
+                return !(OPTIONS.uncounted_users.includes(parseInt(this.id.split('_').slice(-1).pop())));
+            }
+            cells_both = cells_both.filter(filter_out_users);
+            cells_morning = cells_morning.filter(filter_out_users);
+            cells_afternoon = cells_afternoon.filter(filter_out_users);
+        }
+        var count_both = cells_both.length;
+        var count_morning = cells_morning.length;
+        var count_afternoon = cells_afternoon.length;
         var count = Math.max(count_both+count_morning, count_both+count_afternoon);
 
         // update both cells in the header and the footer rows
