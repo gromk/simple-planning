@@ -22,10 +22,10 @@ var OPTIONS = {
     //   3 = not working/not available
 
     // DOM classes associated to each code number
-    code_classes: ["unknown", "office", "home", "away"],
+    code_classes: ["unknown", "office", "home", "away", "other"],
 
     // Font Awesome icons associated to each code number (without "fa-" prefix)
-    code_icons: ["question", "building", "home", "umbrella-beach"],
+    code_icons: ["question", "building", "home", "umbrella-beach", "user-slash"],
 
     // Code number which will be counted and displayed in header/footer rows
     code_to_count: 1,
