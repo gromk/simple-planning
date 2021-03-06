@@ -237,7 +237,7 @@ EOT;
             }
 
             $conn = init_mysql_conn();
-            $sql = "SELECT DATE_FORMAT(date, '%Y-%c-%e') AS date, user, name, code FROM planning INNER JOIN users ON planning.user=users.id WHERE date BETWEEN '$from' AND '$to' ORDER BY date, name";
+            $sql = "SELECT DATE_FORMAT(date, '%Y-%c-%e') AS date, user, name, code FROM planning INNER JOIN users ON planning.user=users.id WHERE date BETWEEN '$from' AND '$to' AND users.active=1 ORDER BY date, name";
             $result = $conn->query($sql);
 
             if ($result) {
@@ -259,7 +259,7 @@ EOT;
         // RETURNS THE LIST OF REGISTERED USERS
         // ====================================
         elseif ($type == 'users') {
-            $sql = "SELECT id, name FROM users ORDER BY name";
+            $sql = "SELECT id, name FROM users WHERE active=1 ORDER BY name";
             $conn = init_mysql_conn();
             $result = $conn->query($sql);
 

@@ -130,7 +130,8 @@ DELIMITER ;
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `name` mediumtext NOT NULL
+  `name` mediumtext NOT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
