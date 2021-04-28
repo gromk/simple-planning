@@ -32,5 +32,5 @@ var OPTIONS = {
 
     // Maximum count allowed before a warning is displayed
     max_count: 10,
-    uncounted_users: [12]
+    uncounted_users: [12, 30]
 };
