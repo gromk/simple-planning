@@ -95,7 +95,7 @@ th {
     display: table-header-group;
 }
 
-tr.user-hidden {
+tr.user-hidden, tr.row_total.hidden {
     display: none;
 }
 

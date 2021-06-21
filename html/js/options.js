@@ -28,9 +28,14 @@ var OPTIONS = {
     code_icons: ["question", "building", "home", "umbrella-beach", "user-slash"],
 
     // Code number which will be counted and displayed in header/footer rows
-    code_to_count: 1,
+    //    => 1, 2, 3 or 4 for counting 'office', 'home', 'away' or 'other'
+    //    => -1 for hiding the "total" rows
+    code_to_count: -1,
+
+    // Count *ALL* rows? (some rows are hidden when a specific group is displayed)
+    count_all_rows: true,
 
     // Maximum count allowed before a warning is displayed
-    max_count: 12,
+    max_count: 100,
     uncounted_users: [12, 30]
 };

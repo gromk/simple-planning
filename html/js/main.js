@@ -139,7 +139,7 @@ $(document).ready(function() {
         // show a restricted group of users
         else {
             // 'user-hidden' class on <tr> is for CSS styling
-            // 'user-hidden' class on <td> is for not counting hidden users in function updateTotalsForThisDay
+            // 'user-hidden' class on <td> is for not counting hidden users in function updateTotalsForThisDay (selon OPTIONS.count_all_rows)
             $('tr.row_user').map(function(index, elt) {
                 var user_id = elt.id.match('_([0-9]+)$')[1];
                 if (user_ids.includes(user_id)) {
@@ -424,13 +424,17 @@ $(document).ready(function() {
 
     // UPDATE THE COUNTS OF CELLS WITH A GIVEN CODE NUMBER
     updateTotalsForThisDay = function(date, code_int) {
+        if (code_int == -1) return;
 
         // jQuery selectors are used to count the cells
         var code_str = OPTIONS.code_classes[code_int];
         var day_cells = $$("td[id^=cell_"+date+"_]");
-        var cells_both = day_cells.not(".user-hidden").filter(".code-"+code_str);
-        var cells_morning = day_cells.not(".user-hidden").filter(".code-"+code_str+"-morning");
-        var cells_afternoon = day_cells.not(".user-hidden").filter(".code-"+code_str+"-afternoon");
+        if (!OPTIONS.count_all_rows) {
+            day_cells = day_cells.not(".user-hidden")
+        }
+        var cells_both = day_cells.filter(".code-"+code_str);
+        var cells_morning = day_cells.filter(".code-"+code_str+"-morning");
+        var cells_afternoon = day_cells.filter(".code-"+code_str+"-afternoon");
         if (OPTIONS.uncounted_users.length > 0) {
             let filter_out_users = function(index) {
                 return !(OPTIONS.uncounted_users.includes(parseInt(this.id.split('_').slice(-1).pop())));
@@ -459,6 +463,7 @@ $(document).ready(function() {
         }
     }
     updateTotalsForAllDates = function(code_int) {
+        if (code_int == -1) return;
         $$("td[id^=header_]").map(function(index, elt) {
             var date = elt.id.substr(7);
             updateTotalsForThisDay(date, code_int);
@@ -571,6 +576,9 @@ $(document).ready(function() {
                     }
                     else if (i == 2 || i == nb_rows) {
                         var trow = $('<tr class="row_total">');
+                        if (OPTIONS.code_to_count == -1) {
+                            trow.addClass('hidden');
+                        }
                         trow.append($('<td class="column_users">Sur site&nbsp;&nbsp;<i class="fa fa-long-arrow-alt-right"></i></td>'));
                     }
                     else {
