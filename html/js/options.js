@@ -30,7 +30,7 @@ var OPTIONS = {
     // Code number which will be counted and displayed in header/footer rows
     //    => 1, 2, 3 or 4 for counting 'office', 'home', 'away' or 'other'
     //    => -1 for hiding the "total" rows
-    code_to_count: -1,
+    code_to_count: 1,
 
     // Count *ALL* rows? (some rows are hidden when a specific group is displayed)
     count_all_rows: true,
