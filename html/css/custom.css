@@ -212,14 +212,14 @@ td.split.code-home-morning.code-office-afternoon      { background: linear-gradi
 td.split.code-home-morning.code-home-afternoon        { background: linear-gradient(to right,  #b2deec 0%,#b2deec 50%,#b2deec 50%,#b2deec 100%); }
 td.split.code-home-morning.code-away-afternoon        { background: linear-gradient(to right,  #b2deec 0%,#b2deec 50%,#f1c5c5 50%,#f1c5c5 100%); }
 td.split.code-home-morning.code-other-afternoon       { background: linear-gradient(to right,  #b2deec 0%,#b2deec 50%,#f4d7a5 50%,#f4d7a5 100%); }
-td.split.code-away-morning.code-unknown-afternoon     { background: linear-gradient(to right,  #f4d7a5 0%,#f4d7a5 50%,transparent 50%,transparent 100%); }
-td.split.code-away-morning.code-office-afternoon      { background: linear-gradient(to right,  #f4d7a5 0%,#f4d7a5 50%,#e5edb7 50%,#e5edb7 100%); }
-td.split.code-away-morning.code-home-afternoon        { background: linear-gradient(to right,  #f4d7a5 0%,#f4d7a5 50%,#b2deec 50%,#b2deec 100%); }
-td.split.code-away-morning.code-away-afternoon        { background: linear-gradient(to right,  #f4d7a5 0%,#f4d7a5 50%,#f1c5c5 50%,#f1c5c5 100%); }
-td.split.code-away-morning.code-other-afternoon       { background: linear-gradient(to right,  #f4d7a5 0%,#f4d7a5 50%,#f4d7a5 50%,#f4d7a5 100%); }
 td.split.code-away-morning.code-unknown-afternoon     { background: linear-gradient(to right,  #f1c5c5 0%,#f1c5c5 50%,transparent 50%,transparent 100%); }
 td.split.code-away-morning.code-office-afternoon      { background: linear-gradient(to right,  #f1c5c5 0%,#f1c5c5 50%,#e5edb7 50%,#e5edb7 100%); }
 td.split.code-away-morning.code-home-afternoon        { background: linear-gradient(to right,  #f1c5c5 0%,#f1c5c5 50%,#b2deec 50%,#b2deec 100%); }
 td.split.code-away-morning.code-away-afternoon        { background: linear-gradient(to right,  #f1c5c5 0%,#f1c5c5 50%,#f1c5c5 50%,#f1c5c5 100%); }
 td.split.code-away-morning.code-other-afternoon       { background: linear-gradient(to right,  #f1c5c5 0%,#f1c5c5 50%,#f4d7a5 50%,#f4d7a5 100%); }
+td.split.code-other-morning.code-unknown-afternoon    { background: linear-gradient(to right,  #f4d7a5 0%,#f4d7a5 50%,transparent 50%,transparent 100%); }
+td.split.code-other-morning.code-office-afternoon     { background: linear-gradient(to right,  #f4d7a5 0%,#f4d7a5 50%,#e5edb7 50%,#e5edb7 100%); }
+td.split.code-other-morning.code-home-afternoon       { background: linear-gradient(to right,  #f4d7a5 0%,#f4d7a5 50%,#b2deec 50%,#b2deec 100%); }
+td.split.code-other-morning.code-away-afternoon       { background: linear-gradient(to right,  #f4d7a5 0%,#f4d7a5 50%,#f1c5c5 50%,#f1c5c5 100%); }
+td.split.code-other-morning.code-other-afternoon      { background: linear-gradient(to right,  #f4d7a5 0%,#f4d7a5 50%,#f4d7a5 50%,#f4d7a5 100%); }
 
