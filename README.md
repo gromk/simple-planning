@@ -2,17 +2,13 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <!--<a href="https://github.com/gromk/simple-planning">
-    <img src="repo_logo.png" alt="Logo" width="160" height="120">
-  </a>-->
-
   <h3 align="center">simple-planning</h3>
 
   <p align="center">
 Manage the planning of your working team in a breeze!
-<!--    <br />
-    <br />
-    <a href="">View Demo</a> -->
+
+![image](screenshot.png?raw=true "Screenshot")
+
   </p>
 </p>
 
@@ -20,7 +16,7 @@ Manage the planning of your working team in a breeze!
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-**simple-planning** regroups on a single web page the monthly schedules of all your teammates. You will know at a glance whether they are on site, on remote, on mission, training or vacation. Indicate your own plans in a few clicks.
+**simple-planning** regroups on a single webpage the monthly schedules of all your teammates. You will know at a glance whether they are on site, on remote, on mission, training or vacation. Indicate your own plans in a few clicks.
 
 **simple-planning** focuses on a few crucial features to keep it child's play. Really no need to be tech-saavy to use it. Left-click on a table cell to set its content, right-click to swap between full/half day modes, hit Ctrl-Z to revert a false move, select only a subgroup of coworkers in the drop-down menu. And that's pretty much it!
 
