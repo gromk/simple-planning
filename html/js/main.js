@@ -549,6 +549,9 @@ $(document).ready(function() {
             var day_names = ['D', 'L', 'Ma', 'Me', 'J', 'V', 'S'];
             var month_names = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
 
+            var first_working_dow = Math.min(OPTIONS.working_day);
+            var last_working_dow = Math.max(OPTIONS.working_day);
+
             // iterating through schedules...
             for (var k=0 ; k<OPTIONS.nb_displayed_months ; k++) {
                 var firstDay = new Date(today.getFullYear(), today.getMonth()+k, 1);    // first day of the schedule [Date object]
@@ -592,7 +595,7 @@ $(document).ready(function() {
                     for (var j=1 ; j<=daysInMonth ; j++) {
                         var dow2 = (dow+j-1) % 7;
                         var date_str = year+'-'+month+'-'+j;
-                        if (dow2 > 0 && dow2 <6 && !OPTIONS.closing_days.includes(date_str)) {
+                        if (OPTIONS.working_dow.includes(dow2) && !OPTIONS.non_working_dates.includes(date_str)) {
                             if (td && old_dow2 > dow2) {
                                 // required when the last day of the previous week is in the middle of the week
                                 td.addClass('column_ldow');
@@ -624,10 +627,10 @@ $(document).ready(function() {
                             }
 
                             // adding some class names for cell styling
-                            if (j == 1 || dow2 == 1) {
+                            if (j == 1 || dow2 == first_working_dow) {
                                 td.addClass('column_fdow');
                             }
-                            if (j == daysInMonth || dow2 == 5) {
+                            if (j == daysInMonth || dow2 == last_working_dow) {
                                 td.addClass('column_ldow');
                             }
                             if (j == today.getDate() && month == today.getMonth()+1 && year == today.getFullYear()) {
