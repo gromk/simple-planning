@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mer. 02 déc. 2020 à 12:19
--- Version du serveur :  10.3.27-MariaDB
--- Version de PHP : 7.3.6
+-- Généré le : sam. 02 oct. 2021 à 10:15
+-- Version du serveur :  10.5.12-MariaDB
+-- Version de PHP : 7.3.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -31,10 +31,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `CODES_REPARTITION` (
 `month` varchar(37)
 ,`total_answers` bigint(21)
-,`unknown` varchar(31)
-,`office` varchar(31)
-,`home` varchar(31)
-,`away` varchar(31)
+,`unknown` varchar(34)
+,`office` varchar(34)
+,`home` varchar(34)
+,`away` varchar(34)
 );
 
 -- --------------------------------------------------------
@@ -62,6 +62,22 @@ CREATE TABLE `groups_users` (
 -- --------------------------------------------------------
 
 --
+-- Doublure de structure pour la vue `LOG`
+-- (Voir ci-dessous la vue réelle)
+--
+CREATE TABLE `LOG` (
+`timestamp` timestamp
+,`planning_date` date
+,`name` mediumtext
+,`old_code` int(11)
+,`new_code` int(11)
+,`old_ip` text
+,`new_ip` text
+);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `log`
 --
 
@@ -75,22 +91,6 @@ CREATE TABLE `log` (
   `old_ip` text DEFAULT NULL,
   `new_ip` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Doublure de structure pour la vue `LOG`
--- (Voir ci-dessous la vue réelle)
---
-CREATE TABLE `LOG` (
-`timestamp` timestamp
-,`planning_date` date
-,`name` mediumtext
-,`old_code` int(11)
-,`new_code` int(11)
-,`old_ip` text
-,`new_ip` text
-);
 
 -- --------------------------------------------------------
 
@@ -163,7 +163,7 @@ CREATE TABLE `USER_IP_PAIRING` (
 --
 DROP TABLE IF EXISTS `CODES_REPARTITION`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`caje0478`@`localhost` SQL SECURITY DEFINER VIEW `CODES_REPARTITION`  AS  select date_format(`planning`.`date`,'%b %Y') AS `month`,count(0) AS `total_answers`,concat(round(sum(`planning`.`code` = 0) * 100 / count(0),1),'%') AS `unknown`,concat(round(sum(`planning`.`code` = 1) * 100 / count(0),1),'%') AS `office`,concat(round(sum(`planning`.`code` = 2) * 100 / count(0),1),'%') AS `home`,concat(round(sum(`planning`.`code` = 3) * 100 / count(0),1),'%') AS `away` from `planning` group by month(`planning`.`date`) order by `planning`.`date` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`caje0478`@`localhost` SQL SECURITY DEFINER VIEW `CODES_REPARTITION`  AS SELECT date_format(`planning`.`date`,'%b %Y') AS `month`, count(0) AS `total_answers`, concat(round(sum((`planning`.`code` = 1) + 0.5 * (`planning`.`code` DIV 10 = 1 and `planning`.`code` > 10) + 0.5 * (`planning`.`code` MOD 10 = 1 and `planning`.`code` > 10)) * 100 / count(0),1),'%') AS `unknown`, concat(round(sum((`planning`.`code` = 2) + 0.5 * (`planning`.`code` DIV 10 = 2 and `planning`.`code` > 10) + 0.5 * (`planning`.`code` MOD 10 = 2 and `planning`.`code` > 10)) * 100 / count(0),1),'%') AS `office`, concat(round(sum((`planning`.`code` = 3) + 0.5 * (`planning`.`code` DIV 10 = 3 and `planning`.`code` > 10) + 0.5 * (`planning`.`code` MOD 10 = 3 and `planning`.`code` > 10)) * 100 / count(0),1),'%') AS `home`, concat(round(sum((`planning`.`code` = 4) + 0.5 * (`planning`.`code` DIV 10 = 4 and `planning`.`code` > 10) + 0.5 * (`planning`.`code` MOD 10 = 4 and `planning`.`code` > 10)) * 100 / count(0),1),'%') AS `away` FROM `planning` GROUP BY month(`planning`.`date`) ORDER BY `planning`.`date` DESC ;
 
 -- --------------------------------------------------------
 
@@ -172,7 +172,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`caje0478`@`localhost` SQL SECURITY DEFINER V
 --
 DROP TABLE IF EXISTS `LOG`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`caje0478`@`localhost` SQL SECURITY DEFINER VIEW `LOG`  AS  select `log`.`timestamp` AS `timestamp`,`log`.`planning_date` AS `planning_date`,`users`.`name` AS `name`,`log`.`old_code` AS `old_code`,`log`.`new_code` AS `new_code`,`log`.`old_ip` AS `old_ip`,`log`.`new_ip` AS `new_ip` from (`log` join `users` on(`users`.`id` = `log`.`planning_user`)) order by `log`.`timestamp` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`caje0478`@`localhost` SQL SECURITY DEFINER VIEW `LOG`  AS SELECT `log`.`timestamp` AS `timestamp`, `log`.`planning_date` AS `planning_date`, `users`.`name` AS `name`, `log`.`old_code` AS `old_code`, `log`.`new_code` AS `new_code`, `log`.`old_ip` AS `old_ip`, `log`.`new_ip` AS `new_ip` FROM (`log` join `users` on(`users`.`id` = `log`.`planning_user`)) ORDER BY `log`.`timestamp` DESC ;
 
 -- --------------------------------------------------------
 
@@ -181,7 +181,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`caje0478`@`localhost` SQL SECURITY DEFINER V
 --
 DROP TABLE IF EXISTS `USER_ACTIVITY_SCORE`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`caje0478`@`localhost` SQL SECURITY DEFINER VIEW `USER_ACTIVITY_SCORE`  AS  select `LOG`.`name` AS `name`,count(0) AS `logged_actions` from `LOG` group by `LOG`.`name` order by count(0) desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`caje0478`@`localhost` SQL SECURITY DEFINER VIEW `USER_ACTIVITY_SCORE`  AS SELECT `LOG`.`name` AS `name`, count(0) AS `logged_actions` FROM `LOG` GROUP BY `LOG`.`name` ORDER BY count(0) DESC ;
 
 -- --------------------------------------------------------
 
@@ -190,7 +190,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`caje0478`@`localhost` SQL SECURITY DEFINER V
 --
 DROP TABLE IF EXISTS `USER_IP_PAIRING`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`caje0478`@`localhost` SQL SECURITY DEFINER VIEW `USER_IP_PAIRING`  AS  select distinct `LOG`.`name` AS `user`,`LOG`.`new_ip` AS `ip` from `LOG` order by `LOG`.`name` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`caje0478`@`localhost` SQL SECURITY DEFINER VIEW `USER_IP_PAIRING`  AS SELECT DISTINCT `LOG`.`name` AS `user`, `LOG`.`new_ip` AS `ip` FROM `LOG` ORDER BY `LOG`.`name` ASC ;
 
 --
 -- Index pour les tables déchargées
