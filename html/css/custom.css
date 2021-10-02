@@ -183,7 +183,7 @@ td.split i.first-icon {
 td.split i.second-icon {
     margin-left: 0.5rem;
 }
-@media all and (max-width: 1200px) {
+@media all and (max-width: 1600px) {
     td.split {
         font-size: 0.7rem;
     }
@@ -198,6 +198,20 @@ td.split i.second-icon {
     td.split i {
         margin-top: 0.4rem;
     }
+}
+.container td.split {
+    font-size: 0.7rem;
+}
+.container td.split i.first-icon {
+    margin-right: 0;
+    margin-right: -0.1rem;
+}
+.container td.split i.second-icon {
+    margin-left: 0;
+    margin-left: -0.1rem;
+}
+.container td.split i {
+    margin-top: 0.4rem;
 }
 
 td.split.code-unknown-morning.code-unknown-afternoon  { background: linear-gradient(to right,  transparent 0%,transparent 50%,transparent 50%,transparent 100%); }
