@@ -3,6 +3,9 @@
 
 var OPTIONS = {
 
+    // Title of the planning
+    title: 'Simple Planning',
+
     // List of working days in the week (0=Sunday, 1=Monday, ..., 6=Saturday)
     working_dow: [1, 2, 3, 4, 5],
 

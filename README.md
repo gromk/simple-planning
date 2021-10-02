@@ -63,6 +63,7 @@ More specifically, you will have to enter:
 ### Frontend
 The style and behavior of the frontend schedule can be customized in **js/options.js**, which contains a single JS object named ```OPTIONS```:
 
+* ``title`` (string) is the text displayed in the browser title bar as well as in the webpage header
 * ``closing_days`` (array) contains the list of all non-working days in your organization.
 * ``nb_displayed_months`` (integer) defines how many month tables will be displayed on the webpage. The current month will be specially highlighted, while all the future months will appear slightly smaller.
 * ``code_classes`` (array) refers to the class names affected to DOM elements with codes 0, 1, 2... Edit this list if you want to add/remove status possibilities.

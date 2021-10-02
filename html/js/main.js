@@ -504,6 +504,10 @@ $(document).ready(function() {
     // PAGE INITIALIZATION
     // ===================
 
+    // DEFINE THE TITLE
+    $(document).title = OPTIONS.title;
+    $("#planning_title").text(OPTIONS.title);
+
     // ATTACH EVENT HANDLERS FOR NAVIGATING THROUGH HISTORY
     $(document).keydown(function(e) {
         if (e.which === 89 && e.ctrlKey) {
