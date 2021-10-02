@@ -4,9 +4,6 @@
     $method = $_SERVER['REQUEST_METHOD'];
 
     switch ($method) {
-        case 'PUT':
-            process_PUT();
-            break;
         case 'POST':
             process_POST();
             break;
@@ -84,109 +81,6 @@
             return_error(500, "Database connection failed");
         }
     }
-
-
-    // ==================================================
-    //                    PUT method
-    // ==================================================
-
-    // POPULATES THE EMPTY DATABASE WITH DATA
-    // ======================================
-    function process_PUT() {
-        $conn = init_mysql_conn();
-
-        $sql = <<<EOT
-INSERT INTO users (name) VALUES
-('Jerome'),
-('Benoit'),
-('Xavier'),
-('Romain'),
-('Franck B'),
-('Pascal'),
-('Bob'),
-('Nicolas'),
-('Alberto'),
-('Florence'),
-('Daniel'),
-('Claire'),
-('Olivier'),
-('Domenico'),
-('Christian'),
-('Philippe'),
-('Thibaut'),
-('Fabienne'),
-('Thierry'),
-('Miguel'),
-('Franck R'),
-('Sébastien'),
-('Stan'),
-('Roberto'),
-('Huan'),
-('Alexis'),
-('Morgane'),
-('Guillaume'),
-('Matthieu')
-EOT;
-        if (!$conn->query($sql)) {
-            return_error(500, "MySQL query failed: " . $conn->error);
-        }
-
-        $sql = <<<EOT
-INSERT INTO groups (name) VALUES
-('Thésards'),
-('Europlexus'),
-('Vibrations'),
-('Usure'),
-('Essais')
-EOT;
-        if (!$conn->query($sql)) {
-            return_error(500, "MySQL query failed: " . $conn->error);
-        }
-
-        $sql = <<<EOT
-INSERT INTO groups_users (group_id, user_id) VALUES
-(1, 23),
-(1, 24),
-(1, 25),
-(1, 26),
-(1, 27),
-(1, 28),
-(1, 29),
-(2, 5),
-(2, 6),
-(2, 7),
-(2, 8),
-(2, 9),
-(2, 10),
-(2, 11),
-(2, 12),
-(2, 18),
-(3, 19),
-(3, 20),
-(3, 1),
-(3, 2),
-(3, 3),
-(3, 4),
-(3, 14),
-(4, 2),
-(4, 15),
-(4, 21),
-(4, 22),
-(4, 1),
-(5, 16),
-(5, 17),
-(5, 19),
-(5, 20),
-(5, 21),
-(5, 22)
-EOT;
-        if (!$conn->query($sql)) {
-            return_error(500, "MySQL query failed: " . $conn->error);
-        }
-
-        $conn->close();
-    }
-
 
     // ==================================================
     //                    POST method
