@@ -1,4 +1,7 @@
 <?php
+// (c) 2021 gromk
+// This code is licensed under MIT license (see LICENSE for details)
+
     http_response_code(500); // in case anything goes wrong... it will be overwritten is JSON is output properly
 
     $method = $_SERVER['REQUEST_METHOD'];

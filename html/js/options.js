@@ -1,3 +1,6 @@
+// (c) 2021 gromk
+// This code is licensed under MIT license (see LICENSE for details)
+
 var OPTIONS = {
 
     // List of working days in the week (0=Sunday, 1=Monday, ..., 6=Saturday)
